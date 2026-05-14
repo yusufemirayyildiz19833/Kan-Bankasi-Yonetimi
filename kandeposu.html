@@ -192,13 +192,13 @@ footer{
 </div>
 
 <div class="stat-box">
-<h2>8</h2>
-<p>Kan Grubu</p>
+<h2 id="bloodlist">0</h2>
+<p>Kan Grubların liste</p>
 </div>
 
 <div class="stat-box">
-<h2 id="bloodlist">0</h2>
-<p>Kan Grubların liste</p>
+<h2>8</h2>
+<p>Kan Grubu</p>
 </div>
 </div>
 
@@ -333,7 +333,25 @@ function tabloGoster(){
 	
 	document.getElementById("bloodCount").innerText = donors.length;
 
-    document.getElementById("bloodlist").innerText = donors.length;
+  let grupSayilari = {};
+
+donors.forEach(d => {
+
+    if(grupSayilari[d.kan]){
+        grupSayilari[d.kan]++;
+    }else{
+        grupSayilari[d.kan] = 1;
+    }
+
+});
+
+let sonuc = "";
+
+for(let grup in grupSayilari){
+    sonuc += grup + ": " + grupSayilari[grup] + " ";
+}
+
+document.getElementById("bloodlist").innerText = sonuc;
 }
 
 /* TEMİZLE */
