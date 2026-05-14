@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kan Bankası</title>
+
+<style>
+body{
+    font-family: Arial;
+    background:#f2f2f2;
+    padding:20px;
+}
+
+h1{
+    color:darkred;
+}
+
+input,select,button{
+    padding:10px;
+    margin:5px;
+}
+
+table{
+    width:100%;
+    background:white;
+    border-collapse: collapse;
+    margin-top:20px;
+}
+
+th,td{
+    border:1px solid gray;
+    padding:10px;
+    text-align:center;
+}
+
+button{
+    background:darkred;
+    color:white;
+    border:none;
+}
+</style>
+</head>
+
+<body>
+
+<h1>🩸 Kan Bankası Yönetimi</h1>
+
+<input type="text" id="ad" placeholder="Ad Soyad">
+
+<select id="kan">
+    <option>A+</option>
+    <option>A-</option>
+    <option>B+</option>
+    <option>B-</option>
+    <option>AB+</option>
+    <option>AB-</option>
+    <option>0+</option>
+    <option>0-</option>
+</select>
+
+<button onclick="ekle()">Ekle</button>
+
+<table>
+    <tr>
+        <th>Ad Soyad</th>
+        <th>Kan Grubu</th>
+    </tr>
+
+    <tbody id="liste"></tbody>
+</table>
+
+<script>
+function ekle(){
+
+    let ad = document.getElementById("ad").value;
+    let kan = document.getElementById("kan").value;
+
+    let satir = `
+    <tr>
+        <td>${ad}</td>
+        <td>${kan}</td>
+    </tr>
+    `;
+
+    document.getElementById("liste").innerHTML += satir;
+
+    document.getElementById("ad").value="";
+}
+</script>
+
+</body>
+</html>
