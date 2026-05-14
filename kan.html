@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KanCan - Kan Bankası Yönetim Sistemi</title>
+    <style>
+        /* CSS Başlangıcı */
+        * { scroll-behavior: smooth; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; line-height: 1.6; background: #f9f9f9; }
+        
+        /* Navigasyon */
+        header { background: #c0392b; color: white; padding: 15px 0; position: fixed; width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        nav { display: flex; justify-content: space-around; align-items: center; max-width: 1200px; margin: auto; }
+        .logo { font-size: 24px; font-weight: bold; }
+        nav ul { list-style: none; display: flex; margin: 0; }
+        nav ul li { margin: 0 15px; }
+        nav ul li a { color: white; text-decoration: none; font-weight: 500; transition: 0.3s; }
+        nav ul li a:hover { color: #ffbcbc; }
+
+        /* Bölüm Ayarları */
+        section { padding: 100px 20px; max-width: 1000px; margin: auto; min-height: 80vh; }
+        h2 { border-bottom: 3px solid #c0392b; display: inline-block; padding-bottom: 5px; color: #c0392b; }
+
+        /* Anasayfa (Hero) */
+        #anasayfa { text-align: center; background: white; border-radius: 15px; margin-top: 120px; min-height: auto; padding: 50px; }
+        
+        /* Formlar ve Tablolar */
+        .card { background: white; padding: 30px; border-radius: 10px; shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        .btn { background: #c0392b; color: white; border: none; padding: 12px 25px; cursor: pointer; border-radius: 5px; font-size: 16px; transition: 0.3s; }
+        .btn:hover { background: #a93226; }
+
+        /* Tablo Stili */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: white; }
+        th, td { border: 1px solid #ddd; padding: 15px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        .status { padding: 5px 12px; border-radius: 20px; font-size: 14px; }
+        .high { background: #d4edda; color: #155724; }
+        .low { background: #f8d7da; color: #721c24; }
+
+        footer { text-align: center; padding: 40px; background: #2c3e50; color: white; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo">🩸 KanCan</div>
+            <ul>
+                <li><a href="#anasayfa">Anasayfa</a></li>
+                <li><a href="#bagis">Bağış Yap</a></li>
+                <li><a href="#stok">Stok Durumu</a></li>
+                <li><a href="#iletisim">İletişim</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- ANASAYFA -->
+    <section id="anasayfa">
+        <h1>Bir Hayat Kurtarmak Sizin Elinizde</h1>
+        <p>KanCan sistemi üzerinden gönüllü bağışçı olabilir, hastanelerin acil kan ihtiyaçlarını takip edebilirsiniz.</p>
+        <br>
+        <a href="#bagis" class="btn">Hemen Bağışçı Ol</a>
+    </section>
+
+    <!-- BAĞIŞ YAP -->
+    <section id="bagis">
+        <div class="card">
+            <h2>Gönüllü Bağışçı Formu</h2>
+            <p>Lütfen bilgilerinizi eksiksiz doldurunuz. Sizinle en kısa sürede iletişime geçilecektir.</p>
+            <form onsubmit="alert('Kayıt başarıyla alındı!'); return false;">
+                <div class="form-group">
+                    <label>Ad Soyad</label>
+                    <input type="text" required placeholder="Örn: Ahmet Yılmaz">
+                </div>
+                <div class="form-group">
+                    <label>Kan Grubu</label>
+                    <select>
+                        <option>A Rh+</option>
+                        <option>A Rh-</option>
+                        <option>B Rh+</option>
+                        <option>B Rh-</option>
+                        <option>0 Rh+</option>
+                        <option>0 Rh-</option>
+                        <option>AB Rh+</option>
+                        <option>AB Rh-</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Telefon Numarası</label>
+                    <input type="tel" required placeholder="05XX XXX XX XX">
+                </div>
+                <button type="submit" class="btn">Bilgilerimi Gönder</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- STOK DURUMU -->
+    <section id="stok">
+        <h2>Canlı Stok Takibi</h2>
+        <p>Hastanelerimizdeki anlık kan rezervi durumu aşağıdadır:</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Kan Grubu</th>
+                    <th>Ünite Sayısı</th>
+                    <th>Durum Analizi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>A Rh+</td>
+                    <td>142</td>
+                    <td><span class="status high">Güvenli</span></td>
+                </tr>
+                <tr>
+                    <td>0 Rh-</td>
+                    <td>8</td>
+                    <td><span class="status low">ACİL İHTİYAÇ</span></td>
+                </tr>
+                <tr>
+                    <td>AB Rh+</td>
+                    <td>25</td>
+                    <td><span class="status low">Azalıyor</span></td>
+                </tr>
+                <tr>
+                    <td>B Rh+</td>
+                    <td>88</td>
+                    <td><span class="status high">Güvenli</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- İLETİŞİM -->
+    <section id="iletisim">
+        <div class="card">
+            <h2>Bizimle İletişime Geçin</h2>
+            <p>Sorularınız veya kurumsal iş birlikleri için mesaj atabilirsiniz.</p>
+            <form onsubmit="alert('Mesajınız iletildi!'); return false;">
+                <div class="form-group">
+                    <label>E-posta Adresiniz</label>
+                    <input type="email" required placeholder="ornek@mail.com">
+                </div>
+                <div class="form-group">
+                    <label>Mesajınız</label>
+                    <textarea rows="5" placeholder="Nasıl yardımcı olabiliriz?"></textarea>
+                </div>
+                <button type="submit" class="btn">Mesajı Gönder</button>
+            </form>
+            <div style="margin-top: 20px;">
+                <p>📍 Adres: Kızılay Merkezi, Ankara</p>
+                <p>📞 Tel: 0212 000 00 00</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 KanCan Yönetim Sistemi | Tüm Hakları Saklıdır.</p>
+    </footer>
+
+</body>
+</html>
