@@ -196,6 +196,10 @@ footer{
 <p>Kan Grubu</p>
 </div>
 
+<div class="stat-box">
+<h2 id="bloodlist">0</h2>
+<p>Kan Grubların liste</p>
+</div>
 </div>
 
 <!-- FORM -->
@@ -259,7 +263,7 @@ footer{
 </div>
 
 <footer>
-© 2026 Kan Bankası Sistemi | HTML CSS JavaScript
+© 2026 Kan Bankası Sistemi | HTML CSS İbrahim Hoca üsküdar
 </footer>
 
 <script>
@@ -326,8 +330,10 @@ function tabloGoster(){
     document.getElementById("liste").innerHTML = tablo;
 
     document.getElementById("donorCount").innerText = donors.length;
+	
+	document.getElementById("bloodCount").innerText = donors.length;
 
-    document.getElementById("bloodCount").innerText = donors.length;
+    document.getElementById("bloodlist").innerText = donors.length;
 }
 
 /* TEMİZLE */
