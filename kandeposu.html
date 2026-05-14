@@ -27,7 +27,6 @@ header{
     text-align:center;
     font-size:32px;
     font-weight:bold;
-    box-shadow:0 3px 10px rgba(0,0,0,0.3);
 }
 
 /* CONTAINER */
@@ -51,23 +50,13 @@ header{
     background:white;
     padding:25px;
     border-radius:15px;
-    text-align:center;
+    text-align:left;
     box-shadow:0 5px 15px rgba(0,0,0,0.1);
-    transition:0.3s;
-}
-
-.stat-box:hover{
-    transform:translateY(-5px);
 }
 
 .stat-box h2{
     color:darkred;
-    font-size:40px;
-}
-
-.stat-box p{
-    margin-top:10px;
-    font-size:18px;
+    margin-bottom:10px;
 }
 
 /* CARD */
@@ -97,7 +86,6 @@ input,select{
     padding:14px;
     border:1px solid #ccc;
     border-radius:8px;
-    font-size:16px;
 }
 
 button{
@@ -107,8 +95,6 @@ button{
     border:none;
     border-radius:8px;
     cursor:pointer;
-    font-size:16px;
-    transition:0.3s;
 }
 
 button:hover{
@@ -129,8 +115,8 @@ table th{
 }
 
 table th,table td{
-    padding:14px;
     border:1px solid #ddd;
+    padding:12px;
     text-align:center;
 }
 
@@ -144,17 +130,7 @@ tr:nth-child(even){
     margin-bottom:15px;
 }
 
-/* FOOTER */
-
-footer{
-    background:#111;
-    color:white;
-    text-align:center;
-    padding:20px;
-    margin-top:40px;
-}
-
-/* DELETE BUTTON */
+/* BUTTONS */
 
 .delete-btn{
     background:red;
@@ -164,6 +140,16 @@ footer{
 .edit-btn{
     background:orange;
     padding:8px 12px;
+}
+
+/* FOOTER */
+
+footer{
+    background:#111;
+    color:white;
+    text-align:center;
+    padding:20px;
+    margin-top:40px;
 }
 
 </style>
@@ -177,7 +163,7 @@ footer{
 
 <div class="container">
 
-<!-- STATS -->
+<!-- İSTATİSTİK -->
 
 <div class="stats">
 
@@ -192,14 +178,17 @@ footer{
 </div>
 
 <div class="stat-box">
-<h2 id="bloodlist">0</h2>
-<p>Kan Grubların liste</p>
+<h2 id="bloodlist">
+A+ : 0
+</h2>
+<p>Kan Grupları</p>
 </div>
 
 <div class="stat-box">
 <h2>8</h2>
-<p>Kan Grubu</p>
+<p>Kan Grubu Türü</p>
 </div>
+
 </div>
 
 <!-- FORM -->
@@ -233,13 +222,14 @@ footer{
 
 </div>
 
-<!-- TABLE -->
+<!-- TABLO -->
 
 <div class="card">
 
 <h2>Donör Listesi</h2>
 
-<input type="text" id="arama" class="search" placeholder="Donör Ara..." onkeyup="ara()">
+<input type="text" id="arama" class="search"
+placeholder="Donör Ara..." onkeyup="ara()">
 
 <table>
 
@@ -263,7 +253,7 @@ footer{
 </div>
 
 <footer>
-© 2026 Kan Bankası Sistemi | HTML CSS İbrahim Hoca üsküdar
+© 2026 Kan Bankası Sistemi
 </footer>
 
 <script>
@@ -271,7 +261,7 @@ footer{
 let donors = [];
 let id = 0;
 
-/* EKLE */
+/* DONÖR EKLE */
 
 function ekleDonor(){
 
@@ -302,7 +292,7 @@ function ekleDonor(){
     temizle();
 }
 
-/* TABLO */
+/* TABLO GÖSTER */
 
 function tabloGoster(){
 
@@ -312,51 +302,76 @@ function tabloGoster(){
 
         tablo += `
         <tr>
-            <td>${d.id}</td>
-            <td>${d.ad}</td>
-            <td>${d.yas}</td>
-            <td>${d.kan}</td>
-            <td>${d.telefon}</td>
 
-            <td>
-                <button class="edit-btn" onclick="duzenle(${index})">Düzenle</button>
+        <td>${d.id}</td>
+        <td>${d.ad}</td>
+        <td>${d.yas}</td>
+        <td>${d.kan}</td>
+        <td>${d.telefon}</td>
 
-                <button class="delete-btn" onclick="sil(${index})">Sil</button>
-            </td>
+        <td>
+
+        <button class="edit-btn"
+        onclick="duzenle(${index})">
+
+        Düzenle
+
+        </button>
+
+        <button class="delete-btn"
+        onclick="sil(${index})">
+
+        Sil
+
+        </button>
+
+        </td>
+
         </tr>
         `;
     });
 
     document.getElementById("liste").innerHTML = tablo;
 
-    document.getElementById("donorCount").innerText = donors.length;
-	
-	document.getElementById("bloodCount").innerText = donors.length;
+    document.getElementById("donorCount").innerText =
+    donors.length;
 
-  let grupSayilari = {};
+    document.getElementById("bloodCount").innerText =
+    donors.length;
 
-donors.forEach(d => {
+    /* KAN GRUBU SAYILARI */
 
-    if(grupSayilari[d.kan]){
-        grupSayilari[d.kan]++;
-    }else{
-        grupSayilari[d.kan] = 1;
-    }
+    let grupSayilari = {};
 
-});
+    donors.forEach(d => {
 
-let sonuc = "";
+        if(grupSayilari[d.kan]){
+            grupSayilari[d.kan]++;
+        }else{
+            grupSayilari[d.kan] = 1;
+        }
 
-for(let grup in grupSayilari){
-    sonuc += grup + ": " + grupSayilari[grup] + " ";
-}
+    });
 
-document.getElementById("bloodlist").innerText = sonuc;
+    let sonuc = `
+    A+ : ${grupSayilari["A+"] || 0} <br>
+    A- : ${grupSayilari["A-"] || 0} <br>
+    B+ : ${grupSayilari["B+"] || 0} <br>
+    B- : ${grupSayilari["B-"] || 0} <br>
+    AB+ : ${grupSayilari["AB+"] || 0} <br>
+    AB- : ${grupSayilari["AB-"] || 0} <br>
+    0+ : ${grupSayilari["0+"] || 0} <br>
+    0- : ${grupSayilari["0-"] || 0}
+    `;
+
+    document.getElementById("bloodlist").innerHTML =
+    sonuc;
 }
 
 /* TEMİZLE */
 
 function temizle(){
+
     document.getElementById("ad").value="";
     document.getElementById("yas").value="";
     document.getElementById("telefon").value="";
@@ -378,7 +393,8 @@ function sil(index){
 
 function duzenle(index){
 
-    let yeniAd = prompt("Yeni ad:", donors[index].ad);
+    let yeniAd =
+    prompt("Yeni ad:", donors[index].ad);
 
     if(yeniAd != null){
 
@@ -392,13 +408,17 @@ function duzenle(index){
 
 function ara(){
 
-    let input = document.getElementById("arama").value.toLowerCase();
+    let input =
+    document.getElementById("arama")
+    .value.toLowerCase();
 
-    let rows = document.querySelectorAll("#liste tr");
+    let rows =
+    document.querySelectorAll("#liste tr");
 
     rows.forEach(row=>{
 
-        let text = row.innerText.toLowerCase();
+        let text =
+        row.innerText.toLowerCase();
 
         if(text.includes(input)){
             row.style.display="";
@@ -407,7 +427,6 @@ function ara(){
         }
 
     });
-
 }
 
 </script>
