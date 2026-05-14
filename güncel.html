@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kan Bankası Projesi</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f3e5f5;
+        }
+
+        header {
+            background: linear-gradient(45deg, #4a148c, #7b1fa2);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+        }
+
+            header h1 {
+                font-size: 32px;
+                font-weight: bold;
+            }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 30px auto;
+        }
+
+        /* STATS - 4 kutunun da yan yana gelmesi için ayarlandı */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr); /* 4 sütun yan yana */
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 20px 10px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+            .stat-box:hover {
+                transform: translateY(-5px);
+            }
+
+            .stat-box h2 {
+                color: #6a1b9a;
+                font-size: 28px; /* Yan yana sığması için font biraz küçültüldü */
+            }
+
+            .stat-box p {
+                margin-top: 10px;
+                font-size: 14px;
+                font-weight: bold;
+                color: #444;
+            }
+
+        /* Özet metni kutu içinde düzgün dursun diye */
+        #bloodlist {
+            font-size: 13px !important;
+            word-break: break-word;
+            line-height: 1.4;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+            .card h2 {
+                color: #4a148c;
+                margin-bottom: 20px;
+            }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+            gap: 15px;
+        }
+
+        input, select {
+            padding: 14px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 14px;
+            background: #6a1b9a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+            button:hover {
+                background: #4a148c;
+            }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+            table th {
+                background: #4a148c;
+                color: white;
+                padding: 14px;
+            }
+
+            table td {
+                padding: 14px;
+                border: 1px solid #eee;
+                text-align: center;
+            }
+
+        tr:nth-child(even) {
+            background: #f9f5fb;
+        }
+
+        .search {
+            margin-bottom: 15px;
+            width: 100%;
+            padding: 12px;
+        }
+
+        footer {
+            background: #2a013d;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+
+        .delete-btn {
+            background: #c62828;
+            color: white;
+            padding: 8px 12px;
+            margin-left: 5px;
+        }
+
+        .edit-btn {
+            background: #ff8f00;
+            color: white;
+            padding: 8px 12px;
+        }
+
+        /* Mobil uyumluluk: Ekran çok küçülürse kutular alt alta gelir */
+        @media (max-width: 900px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 500px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>🩸 Kan Bankası Yönetim Sistemi</h1>
+        <p>Kan Vermek Hayat Kurtarır!</p>
+    </header>
+
+    <div class="container">
+
+        <!-- STATS - Artık hepsi yan yana -->
+        <div class="stats">
+            <div class="stat-box">
+                <h2 id="donorCount">0</h2>
+                <p>Toplam Donör</p>
+            </div>
+
+            <div class="stat-box">
+                <h2 id="bloodCount">0</h2>
+                <p>Kan Ünitesi</p>
+            </div>
+
+            <div class="stat-box">
+                <h2>8</h2>
+                <p>Kan Grubu Tipi</p>
+            </div>
+
+            <div class="stat-box">
+                <h2 id="bloodlist">A+:0 | A-:0 | B+:0 | B-:0 | AB+:0 | AB-:0 | 0+:0 | 0-:0</h2>
+                <p>Kan Grupları Özeti</p>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Yeni Donör Ekle</h2>
+            <div class="form-grid">
+                <input type="text" id="ad" placeholder="Ad Soyad">
+                <input type="number" id="yas" placeholder="Yaş">
+                <select id="kan">
+                    <option>A+</option>
+                    <option>A-</option>
+                    <option>B+</option>
+                    <option>B-</option>
+                    <option>AB+</option>
+                    <option>AB-</option>
+                    <option>0+</option>
+                    <option>0-</option>
+                </select>
+                <input type="text" id="telefon" placeholder="Telefon">
+                <button onclick="ekleDonor()">Donör Ekle</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>Donör Listesi</h2>
+            <input type="text" id="arama" class="search" placeholder="İsim veya Kan Grubu Ara..." onkeyup="ara()">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Ad Soyad</th>
+                        <th>Yaş</th>
+                        <th>Kan</th>
+                        <th>Telefon</th>
+                        <th>İşlem</th>
+                    </tr>
+                </thead>
+                <tbody id="liste"></tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <footer>
+        © 2026 Kan Bankası Sistemi | HTML CSS İbrahim Hoca Üsküdar
+    </footer>
+
+    <script>
+        let donors = [];
+        let idCounter = 0;
+        const kanTipleri = ["A+", "A-", "B+", "B-", "AB+", "AB-", "0+", "0-"];
+
+        function ekleDonor() {
+            let ad = document.getElementById("ad").value;
+            let yas = document.getElementById("yas").value;
+            let kan = document.getElementById("kan").value;
+            let telefon = document.getElementById("telefon").value;
+
+            if (ad == "" || yas == "" || telefon == "") {
+                alert("Lütfen tüm alanları doldurun");
+                return;
+            }
+
+            idCounter++;
+            donors.push({ id: idCounter, ad: ad, yas: yas, kan: kan, telefon: telefon });
+            tabloGoster();
+            temizle();
+        }
+
+        function tabloGoster() {
+            let tablo = "";
+            donors.forEach((d, index) => {
+                tablo += `<tr>
+                <td>${d.id}</td><td>${d.ad}</td><td>${d.yas}</td><td>${d.kan}</td><td>${d.telefon}</td>
+                <td>
+                    <button class="edit-btn" onclick="duzenle(${index})">Düzenle</button>
+                    <button class="delete-btn" onclick="sil(${index})">Sil</button>
+                </td>
+            </tr>`;
+            });
+
+            document.getElementById("liste").innerHTML = tablo;
+            document.getElementById("donorCount").innerText = donors.length;
+            document.getElementById("bloodCount").innerText = donors.length;
+
+            let sayac = {};
+            kanTipleri.forEach(tip => sayac[tip] = 0);
+            donors.forEach(d => { if (sayac[d.kan] !== undefined) sayac[d.kan]++; });
+            document.getElementById("bloodlist").innerText = kanTipleri.map(tip => `${tip}:${sayac[tip]}`).join(" | ");
+        }
+
+        function temizle() {
+            document.getElementById("ad").value = "";
+            document.getElementById("yas").value = "";
+            document.getElementById("telefon").value = "";
+        }
+
+        function sil(index) {
+            if (confirm("Donör silinsin mi?")) {
+                donors.splice(index, 1);
+                tabloGoster();
+            }
+        }
+
+        function duzenle(index) {
+            let yeniAd = prompt("Yeni ad:", donors[index].ad);
+            if (yeniAd) { donors[index].ad = yeniAd; tabloGoster(); }
+        }
+
+        function ara() {
+            let input = document.getElementById("arama").value.toLowerCase();
+            document.querySelectorAll("#liste tr").forEach(row => {
+                row.style.display = row.innerText.toLowerCase().includes(input) ? "" : "none";
+            });
+        }
+    </script>
+
+</body>
+</html>
